@@ -34,3 +34,104 @@
 <!-- <hr />
 
 <input #email (keyup.enter)="onKeyUp(email.value)" /> -->
+
+<!-- <div
+  *ngIf="model.getProducts().length > 0; then productList; else noProducts"
+></div>
+
+<ng-template #productList>
+  <div class="bg-primary text-white m-2 p-2">
+    There are {{ model.getProducts().length }} products in the repository
+  </div>
+</ng-template>
+
+<ng-template #noProducts>
+  <div class="bg-primary text-white m-2 p-2">
+    There are no products in the repository
+  </div>
+</ng-template>
+
+<div
+  [hidden]="model.getProducts().length == 0"
+  class="bg-primary text-white m-2 p-2"
+>
+  There are {{ model.getProducts().length }} products in the repository
+</div>
+
+<div
+  [hidden]="model.getProducts().length != 0"
+  class="bg-primary text-white m-2 p-2"
+>
+  There are no products in the repository
+</div> -->
+
+<!-- <div class="bg-info m-2 p-2" [ngSwitch]="model.getProductCount()">
+  <span *ngSwitchCase="0">There are no products</span>
+  <span *ngSwitchCase="1">There are 1 product</span>
+  <span *ngSwitchCase="2">There are 2 products</span>
+  <span *ngSwitchDefault>There are many products</span>
+</div>
+
+<div class="bg-info m-2 p-2" [ngSwitch]="model.getProductById(1).name">
+  <span *ngSwitchCase="productName">IPhone 6</span>
+  <span *ngSwitchCase="'IPhone 7'">IPhone 7</span>
+  <span *ngSwitchCase="'IPhone 8'">IPhone 8</span>
+  <span *ngSwitchDefault>Other Product</span>
+</div> -->
+
+<!-- <ul class="list-group m-5">
+  <li
+    *ngFor="
+      let product of model.getProducts();
+      index as i;
+      first as isFirst;
+      last as isLast;
+      odd as isOdd;
+      even as isEven
+    "
+    class="list-group-item"
+  >
+    {{ i + 1 }} - {{ product.name }}
+    <span *ngIf="isFirst" class="badge badge-primary">First item</span>
+    <span *ngIf="isLast" class="badge badge-success">Last item</span>
+    <span *ngIf="isOdd" class="badge badge-danger">Odd item</span>
+    <span *ngIf="isEven" class="badge badge-warning">Even item</span>
+  </li>
+</ul> -->
+
+<!-- <div class="m-5">
+  <button class="btn btn-primary" (click)="addProduct()">Add Product</button>
+  <ul class="list-group mt-2">
+    <li *ngFor="let product of model.getProducts()" class="list-group-item">
+      {{ product.name }}
+      <button class="btn btn-danger btn-sm" (click)="deleteProduct(product)">
+        Delete
+      </button>
+      <button class="btn btn-warning btn-sm" (click)="updateProduct(product)">
+        Update
+      </button>
+    </li>
+  </ul>
+</div> -->
+
+<!-- <ng-template
+  [ngTemplateOutlet]="productList"
+  [ngTemplateOutletContext]="{ products: model.getProducts() }"
+></ng-template>
+
+<ng-template
+  [ngTemplateOutlet]="productList"
+  [ngTemplateOutletContext]="{ products: model.getProducts() }"
+></ng-template>
+
+<ng-template #productList let-products="products">
+  <div class="m-5">
+    <ul class="list-group mt-2">
+      <li *ngFor="let product of products" class="list-group-item">
+        {{ product.name }}
+      </li>
+    </ul>
+  </div>
+</ng-template> -->
+
+<input type="text" appInputEmail />

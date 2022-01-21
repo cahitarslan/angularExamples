@@ -4,40 +4,40 @@ import { ProductRepository } from '../repository.model';
 
 @Component({
   selector: 'app',
-  // templateUrl: 'product.component.html',
-  template: `
-    <!-- <input [(ngModel)]="email" (keyup.enter)="onKeyUp2()" />
-    <br />
-    <span> {{ email }} </span> -->
+  templateUrl: 'product.component.html',
+  // template: `
+  //   <input [(ngModel)]="email" (keyup.enter)="onKeyUp2()" />
+  //   <br />
+  //   <span> {{ email }} </span>
 
-    <!-- <h4>Lower-Upper-Title CasePipe</h4>
-    <p>{{ title }}</p>
-    <p>{{ title | lowercase }}</p>
-    <p>{{ title | uppercase }}</p>
-    <p>{{ title | titlecase }}</p>
+  //   <h4>Lower-Upper-Title CasePipe</h4>
+  //   <p>{{ title }}</p>
+  //   <p>{{ title | lowercase }}</p>
+  //   <p>{{ title | uppercase }}</p>
+  //   <p>{{ title | titlecase }}</p>
 
-    <h4>Date Pipe</h4>
-    <p>{{ today }}</p>
-    <p>{{ today | date }}</p>
-    <p>{{ today | date: 'fullDate' }}</p>
-    <p>{{ today | date: 'medium' }}</p>
-    <p>{{ today | date: 'shortTime' }}</p>
-    <p>{{ today | date: 'h:mm:ss' }}</p>
+  //   <h4>Date Pipe</h4>
+  //   <p>{{ today }}</p>
+  //   <p>{{ today | date }}</p>
+  //   <p>{{ today | date: 'fullDate' }}</p>
+  //   <p>{{ today | date: 'medium' }}</p>
+  //   <p>{{ today | date: 'shortTime' }}</p>
+  //   <p>{{ today | date: 'h:mm:ss' }}</p>
 
-    <h4>Decimal Pipe</h4>
-    <p>{{ students }}</p>
-    <p>{{ students | number }}</p>
-    <p>{{ price | number: '1.1-1' }}</p>
+  //   <h4>Decimal Pipe</h4>
+  //   <p>{{ students }}</p>
+  //   <p>{{ students | number }}</p>
+  //   <p>{{ price | number: '1.1-1' }}</p>
 
-    <h4>Currency Pipe</h4>
-    <p>{{ price | currency: 'EUR' }}</p>
+  //   <h4>Currency Pipe</h4>
+  //   <p>{{ price | currency: 'EUR' }}</p>
 
-    <h4>Percent Pipe</h4>
-    <p>{{ completed | percent }}</p>
-    <p>{{ completed | percent: '2.2-2' }}</p> -->
+  //   <h4>Percent Pipe</h4>
+  //   <p>{{ completed | percent }}</p>
+  //   <p>{{ completed | percent: '2.2-2' }}</p> -->
 
-    {{ text | summary: 5 }}
-  `,
+  //   {{ text | summary: 5 }}
+  // `,
   styleUrls: ['product.component.css'],
 })
 export class ProductComponent {
@@ -52,6 +52,8 @@ export class ProductComponent {
   model: ProductRepository = new ProductRepository();
   product: Product = this.model.getProductById(1);
   disabled = true;
+
+  productName: string = this.model.getProductById(1).name;
 
   getClasses(id: number): string {
     let product = this.model.getProductById(id);
@@ -103,5 +105,19 @@ export class ProductComponent {
 
   getValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
+  }
+
+  addProduct() {
+    this.model.addProduct(
+      new Product(6, 'IPhone 13', 'iyi telefon', '6.jpg', 4000)
+    );
+  }
+
+  deleteProduct(product: Product) {
+    this.model.deleteProduct(product);
+  }
+
+  updateProduct(product: Product) {
+    product.name = 'updated';
   }
 }
