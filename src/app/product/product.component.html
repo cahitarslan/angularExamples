@@ -134,4 +134,166 @@
   </div>
 </ng-template> -->
 
-<input type="text" appInputEmail />
+<!-- <input type="text" appInputEmail /> -->
+
+<!-- <admin-products></admin-products> -->
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div class="m-3">
+        <form #form="ngForm" (ngSubmit)="submitForm(form)">
+          <div
+            *ngIf="formSubmitted && form.invalid"
+            class="bg-danger text-white p-3 my-2"
+          >
+            An error has occurred. Check your information.
+            <ul>
+              <li *ngFor="let error of getFormValidationErrors(form)">
+                {{ error }}
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-info text-white m-2 p-2">
+            {{ jsonProduct }}
+          </div>
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              required
+              minlength="3"
+              maxlength="10"
+              pattern="^[A-Za-z]+$"
+              [(ngModel)]="newProduct.name"
+              name="name"
+              #name="ngModel"
+              type="text"
+              class="form-control"
+              (change)="log(name)"
+            />
+            <div
+              class="alert alert-danger"
+              *ngIf="(formSubmitted || name.dirty) && name.invalid"
+            >
+              <p *ngFor="let error of getValidationErrors(name)">
+                {{ error }}
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea
+              required
+              [(ngModel)]="newProduct.description"
+              name="description"
+              #description="ngModel"
+              class="form-control"
+            ></textarea>
+            <div
+              class="alert alert-danger"
+              *ngIf="
+                (formSubmitted || description.dirty) && description.invalid
+              "
+            >
+              <p *ngFor="let error of getValidationErrors(description)">
+                {{ error }}
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Price</label>
+            <input
+              required
+              [(ngModel)]="newProduct.price"
+              name="price"
+              #price="ngModel"
+              type="text"
+              class="form-control"
+            />
+            <div
+              class="alert alert-danger"
+              *ngIf="(formSubmitted || price.dirty) && price.invalid"
+            >
+              <p *ngFor="let error of getValidationErrors(price)">
+                {{ error }}
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Image Url</label>
+            <input
+              required
+              [(ngModel)]="newProduct.imageUrl"
+              name="imageUrl"
+              #imageUrl="ngModel"
+              type="text"
+              class="form-control"
+            />
+            <div
+              class="alert alert-danger"
+              *ngIf="(formSubmitted || imageUrl.dirty) && imageUrl.invalid"
+            >
+              <p *ngFor="let error of getValidationErrors(imageUrl)">
+                {{ error }}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="formSubmitted && form.invalid"
+            [class.btn-secondary]="formSubmitted && form.invalid"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="m-5">
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control" formControlName="name" />
+      <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
+        <ul>
+          <li *ngIf="name.errors?.['required']">Name is required</li>
+          <li *ngIf="name.errors?.['minlength']">
+            Min. {{ (name.errors?.['minlength']).requiredLength }} character
+          </li>
+          <li *ngIf="name.errors?.['maxlength']">
+            Max. {{ (name.errors?.['maxlength']).requiredLength }} character
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-control" formControlName="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Price</label>
+      <input class="form-control" formControlName="price" />
+    </div>
+    <div class="form-group">
+      <label>Image Url</label>
+      <input class="form-control" formControlName="imageUrl" />
+    </div>
+    <div
+      *ngIf="imageUrl.touched && imageUrl.invalid"
+      class="alert alert-danger"
+    >
+      <ul>
+        <li *ngIf="imageUrl.errors?.['required']">imageUrl is required</li>
+        <li *ngIf="imageUrl.errors?.['wrongExtension']">wrong extension</li>
+      </ul>
+    </div>
+    <button type="submit" (click)="updateProduct()" class="btn btn-primary">
+      Submit
+    </button>
+  </form>
+</div>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { ImageValidators } from '../image.validators';
 import { Product } from '../product.model';
 import { ProductRepository } from '../repository.model';
 
@@ -46,7 +48,7 @@ export class ProductComponent {
   today: number = Date.now();
   title: string = 'Angular kursu';
   students: number = 21536;
-  price: number = 395.9756;
+  // price: number = 395.9756;
   completed: number = 0.26;
 
   model: ProductRepository = new ProductRepository();
@@ -83,11 +85,11 @@ export class ProductComponent {
     };
   }
 
-  onSubmit(event: Event) {
-    event.stopPropagation();
-    console.log('button was clicked');
-    console.log(event);
-  }
+  // onSubmit(event: Event) {
+  //   event.stopPropagation();
+  //   console.log('button was clicked');
+  //   console.log(event);
+  // }
 
   onDivClicked() {
     console.log('div was clicked');
@@ -107,17 +109,114 @@ export class ProductComponent {
     return (event.target as HTMLInputElement).value;
   }
 
-  addProduct() {
-    this.model.addProduct(
-      new Product(6, 'IPhone 13', 'iyi telefon', '6.jpg', 4000)
-    );
+  // addProduct() {
+  //   this.model.addProduct(
+  //     new Product(6, 'IPhone 13', 'iyi telefon', '6.jpg', 4000)
+  //   );
+  // }
+
+  // deleteProduct(product: Product) {
+  //   this.model.deleteProduct(product);
+  // }
+
+  // updateProduct(product: Product) {
+  //   product.name = 'updated';
+  // }
+
+  newProduct: Product = new Product();
+
+  get jsonProduct() {
+    return JSON.stringify(this.newProduct);
   }
 
-  deleteProduct(product: Product) {
-    this.model.deleteProduct(product);
+  addProduct(p: Product) {
+    console.log('New Product: ' + this.jsonProduct);
   }
 
-  updateProduct(product: Product) {
-    product.name = 'updated';
+  log(x: any) {
+    console.log(x);
+  }
+
+  formSubmitted: boolean = false;
+
+  submitForm(form: NgForm) {
+    console.log(form);
+    this.formSubmitted = true;
+    if (form.valid) {
+      this.addProduct(this.newProduct);
+      this.newProduct = new Product();
+      form.reset();
+      this.formSubmitted = false;
+    }
+  }
+
+  getValidationErrors(state: any, key?: string): string[] {
+    let ctrlName: string = state.name || key;
+    let messages: string[] = [];
+
+    if (state.errors) {
+      for (let errorName in state.errors) {
+        switch (errorName) {
+          case 'required':
+            messages.push(`you must enter a ${ctrlName}`);
+            break;
+          case 'minlength':
+            messages.push(`min 3 characters for ${ctrlName}`);
+            break;
+          case 'pattern':
+            messages.push(`${ctrlName} contains illegal characters`);
+            break;
+        }
+      }
+    }
+    return messages;
+  }
+
+  getFormValidationErrors(form: NgForm): string[] {
+    let messages: string[] = [];
+
+    Object.keys(form.controls).forEach((k) => {
+      console.log(k);
+      console.log(form.controls[k]);
+
+      this.getValidationErrors(form.controls[k], k).forEach((message) =>
+        messages.push(message)
+      );
+    });
+
+    return messages;
+  }
+
+  productForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(20),
+    ]),
+    description: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    imageUrl: new FormControl('', [
+      Validators.required,
+      ImageValidators.isValidExtension,
+    ]),
+  });
+
+  onSubmit() {
+    console.log(this.productForm.value);
+  }
+
+  updateProduct() {
+    this.productForm.patchValue({
+      name: 'Samsung Galaxy',
+      price: 4000,
+    });
+  }
+
+  get name() {
+    return this.productForm.get('name');
+  }
+
+  get imageUrl() {
+    return this.productForm.get('imageUrl');
   }
 }
